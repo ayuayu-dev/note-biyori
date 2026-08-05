@@ -6,12 +6,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Auth/Login', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    // Laravel Breeze標準のログイン画面を表示するため、
+    // loginルートへリダイレクトする
+    return redirect()->route('login');
 });
 
 Route::get('/dashboard', function () {
