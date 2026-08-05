@@ -95,6 +95,20 @@ const submit = () => {
                     ログイン
                 </PrimaryButton>
             </div>
+
+            <div class="mt-6 border-t border-gray-200 pt-4 text-center">
+                <p class="text-sm text-gray-600 mb-2">
+                    まだアカウントをお持ちでない方
+                </p>
+
+                <Link
+                    :href="route('register')"
+                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                >
+                    新規登録はこちら
+                </Link>
+            </div>
+
         </form>
     </GuestLayout>
 </template>
