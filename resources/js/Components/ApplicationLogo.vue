@@ -6,6 +6,6 @@ import logo from '@/images/logo-login.png';
     <img
         :src="logo"
         alt="ノートびより"
-        class="h-40 w-auto"
+        class="h-[350px] w-auto"
     />
 </template>
