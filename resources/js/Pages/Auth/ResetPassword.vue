@@ -35,15 +35,9 @@ const submit = () => {
             <div>
                 <InputLabel for="email" value="メールアドレス" />
 
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
+                <div class="mt-1 rounded-md border border-gray-300 bg-gray-100 px-3 py-2 text-gray-700">
+                    {{ form.email }}
+                </div>
 
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
