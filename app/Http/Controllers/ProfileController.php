@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\Auth\DeleteUserRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,23 +42,24 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * ログイン中のユーザーのアカウントを削除する。
      */
-    public function destroy(Request $request): RedirectResponse
+    public function destroy(DeleteUserRequest $request): RedirectResponse
     {
-        $request->validate([
-            'password' => ['required', 'current_password'],
-        ]);
-
+        // ログイン中のユーザー情報を取得する。
         $user = $request->user();
 
+        // ユーザーをログアウトさせる。
         Auth::logout();
 
+        // ユーザーのアカウントを削除する。
         $user->delete();
 
+        // セッションを無効化し、CSRFトークンを再生成する。
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        // アカウント削除後、トップページへリダイレクトする。
         return Redirect::to('/');
     }
 }
