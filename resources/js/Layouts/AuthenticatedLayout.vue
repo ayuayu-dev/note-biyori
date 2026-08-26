@@ -37,6 +37,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     ホーム
                                 </NavLink>
+
+                                <NavLink
+                                    :href="route('posts.create')"
+                                    :active="route().current('posts.create')"
+                                >
+                                    新規投稿
+                                </NavLink>
                             </div>
                         </div>
 
@@ -143,6 +150,13 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('dashboard')"
                         >
                             ホーム
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            :href="route('posts.create')"
+                            :active="route().current('posts.create')"
+                        >
+                            新規投稿
                         </ResponsiveNavLink>
                     </div>
 
