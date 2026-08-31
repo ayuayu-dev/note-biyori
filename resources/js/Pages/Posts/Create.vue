@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import { Head } from '@inertiajs/vue3';
+import { Head, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const fileInput = ref<HTMLInputElement | null>(null);
 const imagePreview = ref<string | null>(null);
 const imageError = ref<string | null>(null);
+const selectedFile = ref<File | null>(null);
 
 const openFileDialog = () => {
     fileInput.value?.click();
@@ -34,6 +35,7 @@ const handleFileChange = (event: Event) => {
     // 画像形式のチェック
     if (!allowedTypes.includes(file.type)) {
         imagePreview.value = null;
+        selectedFile.value = null;
         imageError.value = 'JPEG、PNG、WebP形式の画像を選択してください。';
 
         target.value = '';
@@ -46,6 +48,7 @@ const handleFileChange = (event: Event) => {
 
     if (file.size > maxSize) {
         imagePreview.value = null;
+        selectedFile.value = null;
         imageError.value = '画像サイズは5MB以下にしてください。';
 
         target.value = '';
@@ -54,7 +57,22 @@ const handleFileChange = (event: Event) => {
     }
 
     // バリデーション成功
+    selectedFile.value = file;
     imagePreview.value = URL.createObjectURL(file);
+};
+
+const submitPost = () => {
+    if (!selectedFile.value) {
+        imageError.value = '画像を選択してください。';
+
+        return;
+    }
+
+    const formData = new FormData();
+
+    formData.append('image', selectedFile.value);
+
+    router.post('/posts', formData);
 };
 </script>
 
@@ -128,6 +146,7 @@ const handleFileChange = (event: Event) => {
                         <PrimaryButton
                             type="button"
                             class="w-full justify-center"
+                            @click="submitPost"
                         >
                             投稿する
                         </PrimaryButton>
