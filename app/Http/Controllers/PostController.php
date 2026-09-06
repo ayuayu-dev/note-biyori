@@ -11,6 +11,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $path = $request->file('image')->store('posts', 'public');
+
+        dd($path);
     }
 }
