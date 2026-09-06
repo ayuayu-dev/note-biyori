@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePostRequest;
+use App\Models\Post;
 
 class PostController extends Controller
 {
@@ -13,6 +14,8 @@ class PostController extends Controller
     {
         $path = $request->file('image')->store('posts', 'public');
 
-        dd($path);
+        $post = Post::create([
+            'user_id' => $request->user()->id,
+        ]);
     }
 }

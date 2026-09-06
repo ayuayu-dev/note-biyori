@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Post extends Model
 {
     /**
+     * 一括代入可能な属性
+     */
+    protected $fillable = [
+        'user_id',
+    ];
+    
+    /**
      * 投稿に紐づく画像を取得
      */
     public function images(): HasMany
