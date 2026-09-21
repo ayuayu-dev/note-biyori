@@ -229,7 +229,10 @@ class NoteBiyoriUserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->randomElement(self::TEST_NAMES),
+            'name' => fake()->unique()->randomElement(self::TEST_NAMES),//名前の生成ロジック
+            'email' => fake()->unique()->safeEmail(), //ユニークなメールアドレス
+            'email_verified_at' => now(),             //メール認証済み日時
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // パスワード（password）
         ];
     }
 }
