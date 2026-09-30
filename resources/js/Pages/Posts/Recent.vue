@@ -35,19 +35,19 @@ defineProps<{
         </template>
 
         <div class="py-6">
-            <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            <!-- 最大幅を少し狭く（max-w-2xl）して、インスタのフィード感に近づける -->
+            <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:px-8">
                 <!-- 投稿が一件もない場合の表示 -->
                 <div v-if="posts.data.length === 0" class="py-12 text-center text-gray-500">
                     まだ投稿がありません。
                 </div>
 
-                <!-- インスタ風グリッドレイアウト -->
-                <div v-else class="grid grid-cols-3 gap-2 md:gap-4">
+                <!-- 確実に横3列にするためのグリッド（gap-1で隙間を詰める） -->
+                <div v-else class="grid grid-cols-3 gap-1">
                     <div 
                         v-for="post in posts.data" 
                         :key="post.id" 
-                        class="relative bg-gray-100 overflow-hidden rounded-md shadow-sm"
-                        style="aspect-ratio: 1 / 1;"
+                        class="relative aspect-square bg-gray-100 overflow-hidden"
                     >
                         <!-- 投稿に紐づく画像を表示 -->
                         <img 
@@ -57,7 +57,7 @@ defineProps<{
                             class="h-full w-full object-cover hover:opacity-95 transition cursor-pointer"
                         />
                         <!-- 画像がない場合のフォールバック -->
-                        <div v-else class="flex h-full w-full items-center justify-center text-sm text-gray-400">
+                        <div v-else class="flex h-full w-full items-center justify-center text-xs text-gray-400">
                             No Image
                         </div>
                     </div>
