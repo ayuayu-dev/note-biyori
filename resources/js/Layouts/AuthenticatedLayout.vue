@@ -44,6 +44,13 @@ const showingNavigationDropdown = ref(false);
                                 >
                                     新規投稿
                                 </NavLink>
+
+                                <NavLink
+                                    :href="route('posts.recent')"
+                                    :active="route().current('posts.recent')">
+                                    新着
+                                </NavLink>
+
                             </div>
                         </div>
 
@@ -158,6 +165,14 @@ const showingNavigationDropdown = ref(false);
                         >
                             新規投稿
                         </ResponsiveNavLink>
+
+                        <ResponsiveNavLink
+                            :href="route('posts.recent')"
+                            :active="route().current('posts.recent')"
+                        >
+                            新着
+                        </ResponsiveNavLink>
+
                     </div>
 
                     <!-- Responsive Settings Options -->
