@@ -14,7 +14,7 @@ class RecentPostController extends Controller
         // 投稿を新しい順に、画像とユーザー情報も一緒に10件ずつ取得
         $posts = Post::with(['images', 'user'])
             ->latest()
-            ->paginate(10);
+            ->paginate(21);
 
         return Inertia::render('Posts/Recent', [
             'posts' => $posts,
