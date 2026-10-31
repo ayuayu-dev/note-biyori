@@ -13,6 +13,9 @@ const openFileDialog = () => {
     fileInput.value?.click();
 };
 
+// --- 変数定義に追加（投稿完了メッセージ） ---
+const successMessage = ref<string | null>(null);
+
 const handleFileChange = (event: Event) => {
     const target = event.target as HTMLInputElement;
 
@@ -24,6 +27,8 @@ const handleFileChange = (event: Event) => {
 
     // エラーをリセット
     imageError.value = null;
+    //前回の完了メッセージをリセット
+    successMessage.value = null; // 👈 次の画像を選んだら完了メッセージを消す
 
     // 許可する画像形式
     const allowedTypes = [
@@ -72,7 +77,28 @@ const submitPost = () => {
 
     formData.append('image', selectedFile.value);
 
-    router.post('/posts', formData);
+    //投稿後に画像プレビューをリセットする
+    router.post('/posts', formData, {
+        onSuccess: () => {
+            // プレビュー表示用のURLをクリア（「＋」の枠に戻る）
+            imagePreview.value = null;
+
+            // 保持しているFileオブジェクトをクリア
+            selectedFile.value = null;
+
+            // エラー表示をクリア
+            imageError.value = null;
+
+            // inputタグ自体の選択状態をクリア（同じ画像を再選択できるようにする）
+            if (fileInput.value) {
+                fileInput.value.value = '';
+            }
+
+            // 👇 完了メッセージをセット
+            successMessage.value = '投稿が完了しました！✨';
+        },
+    });
+
 };
 </script>
 
@@ -95,6 +121,15 @@ const submitPost = () => {
                     class="mx-auto w-full"
                     style="max-width: 500px;"
                 >
+
+                    <!-- 👇 投稿完了メッセージ表示エリア -->
+                    <div
+                        v-if="successMessage"
+                        class="mb-4 rounded-lg border border-green-200 bg-green-50 p-4 text-center text-sm font-medium text-green-700"
+                    >
+                        {{ successMessage }}
+                    </div>
+
                     <!-- 画像追加エリア -->
                     <div
                         class="flex h-auto w-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-lg border-2 border-dashed border-gray-300 bg-gray-50"
